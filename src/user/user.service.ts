@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { UserDto } from './user.interface';
 
 @Injectable()
 export class UserService {
@@ -14,10 +15,10 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async join(): Promise<User> {
+  async join(joinUser: UserDto): Promise<User> {
     const user = new User();
-    user.userId = "jays";
-    user.password = "1234"; // apply encryption later
+    user.userId = joinUser.userId;
+    user.password = joinUser.password; // apply encryption later
 
     await this.userRepository.save(user);
 

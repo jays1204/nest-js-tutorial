@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 import { Post } from './post.entity';
 import { User } from '../user/user.entity';
+import { PostDto } from './post.interface';
 
 @Injectable()
 export class PostService {
@@ -16,10 +17,10 @@ export class PostService {
     return list;
   }
 
-  async write(author: User): Promise<Post> {
+  async write(author: User, postItem: PostDto): Promise<Post> {
     const post = new Post();
-    post.title = "don't do that youngsu!";
-    post.contents = "said by hose?";
+    post.title = postItem.title;
+    post.contents = postItem.contents;
     post.user = Promise.resolve(author);
 
     await this.postRepository.save(post);
