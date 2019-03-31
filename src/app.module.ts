@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CtrlModule } from './ctrl/ctrl.module';
 
 
 @Module({
@@ -18,7 +19,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           synchronize: true,
         }),
-    UserModule, PostModule ],
+    UserModule, PostModule, CtrlModule ],
   controllers: [AppController],
   providers: [AppService]
 })

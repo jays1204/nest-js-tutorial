@@ -14,10 +14,10 @@ export class Post {
 
   @ManyToOne(type => User)
   @JoinColumn({
-    name: "user",
+    name: "user_id",
     referencedColumnName: "id"
   })
-  user: User;
+  user: Promise<User>;
 
 
   @Column({default: 0})

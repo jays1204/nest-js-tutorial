@@ -12,14 +12,15 @@ export class PostService {
   ) {}
 
   async findAll(): Promise<Post[]> {
-    return await this.postRepository.find();
+    const list = await this.postRepository.find();
+    return list;
   }
 
   async write(author: User): Promise<Post> {
     const post = new Post();
     post.title = "don't do that youngsu!";
     post.contents = "said by hose?";
-    post.user = author;
+    post.user = Promise.resolve(author);
 
     await this.postRepository.save(post);
 
