@@ -15,7 +15,7 @@ mysql이 설치되지 않앗다면 sqlite3를 사용해도 된다.
 ### 모델 정의  
 
 ```typescript
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -25,7 +25,7 @@ export class User {
   @Column({ length: 15, unique: true })
   userId: string;
 
-  @Columns({ length: 100 }) 
+  @Column({ length: 100 }) 
   password: string;
 
   @CreateDateColumn()
@@ -38,7 +38,7 @@ export class User {
 사용자는 pk 정보와 사용자마다의 고유한 id, 그리고 password 정보와 생성일시와 업데이트 일시를 기본으로 갖는다.   
 
 ```typescript
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Post {
@@ -88,14 +88,45 @@ Photo Entity역시 위와 같이 photo module에 정의된다.
 
 
 
+## DB Connection 정의(2-1)
+DB Connection은 root module에서 관리한다.  
+
+```typescript
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+
+@Module({
+  imports: [
+    TypeOrmModule.forRoot({
+          type: 'mysql',
+          host: 'localhost',
+          port: 3306,
+          username: 'devteam',
+          password: '1234',
+          database: 'freeboard',
+          entities: [__dirname + '/**/*.entity{.ts,.js}'],
+          synchronize: true,
+        })
+    UserModule, PostModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+```  
+
+위와 같이 root module에 추가적인 imports가 생긴다.  
+바로 DB 접속을 위한 설정이다.  
+MYSQL에는 미리 deveteam 사용자와 freeboard 라는 DB를 만들어 두었다.  
 
 
 
-## DB Connection 정의
-DB Connection은 root module에서 관리한다.
 
-????
-
+## Relation 설정 추가(기타)
 
 
 ### References
