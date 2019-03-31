@@ -125,8 +125,25 @@ MYSQL에는 미리 deveteam 사용자와 freeboard 라는 DB를 만들어 두었
 
 
 
-
 ## Relation 설정 추가(기타)
+User는 여러개의 게시물을 작성할 수 있다. 즉 User-Post는 1:N 관계이다.  
+이런 관계를 표현하기 위해 ManyToOne, OneToMany 등을 지원한다.  
+이 예제에서는 Post의 작성자를 찾는 것이 중요하므로 Post Entity에 ManyToOne 관계를 설정할 것이다.  
+또한 Post에서 User 관계만을 찾는 undirectional mapping을 설정할 것이다.  
+
+```typescript
+@ManyToOne(type => User)
+@JoinColumn({
+	name: "user",
+	referencedColumnName: "id"
+})
+user: User;
+```  
+
+위와 같은 칼럼 설정이 Post Entity에 추가되었다. 이로서 Post는 작성자 정보를 갖게 된다.  
+
+
+
 
 
 ### References

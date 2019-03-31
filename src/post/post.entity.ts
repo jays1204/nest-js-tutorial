@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Post {
@@ -10,6 +11,14 @@ export class Post {
 
   @Column({length: 300 })
   contents: string;
+
+  @ManyToOne(type => User)
+  @JoinColumn({
+    name: "user",
+    referencedColumnName: "id"
+  })
+  user: User;
+
 
   @Column({default: 0})
   viewCount: number;
