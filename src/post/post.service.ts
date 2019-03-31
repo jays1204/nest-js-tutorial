@@ -9,7 +9,9 @@ import { PostDto } from './post.interface';
 export class PostService {
   constructor(
   @InjectRepository(Post)
-    private readonly postRepository: Repository<Post>
+    private readonly postRepository: Repository<Post>,
+  @InjectRepository(User)  
+    private readonly userRepository: Repository<User>
   ) {}
 
   async findAll(): Promise<Post[]> {
@@ -17,7 +19,8 @@ export class PostService {
     return list;
   }
 
-  async write(author: User, postItem: PostDto): Promise<Post> {
+  async write(postItem: PostDto): Promise<Post> {
+    const author = await this.userRepository.findOne({userId: 'jays'});
     const post = new Post();
     post.title = postItem.title;
     post.contents = postItem.contents;

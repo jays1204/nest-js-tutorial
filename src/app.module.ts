@@ -17,7 +17,7 @@ import { CtrlModule } from './ctrl/ctrl.module';
           password: '1234',
           database: 'freeboard',
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
-          synchronize: true,
+          synchronize: false, // 
         }),
     UserModule, PostModule, CtrlModule ],
   controllers: [AppController],

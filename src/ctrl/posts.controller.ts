@@ -19,8 +19,8 @@ export class PostsController {
 
   @Post()
   async write(@Body() postItem: PostDto): Promise<PostResponse> {
-    //TBD
-    return;
+    const item = await this.postService.write(postItem);
+    return { post: item };
   }
 
   @Get("/:post_id")

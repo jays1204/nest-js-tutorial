@@ -76,3 +76,9 @@ controller와 service method에 인자로 UserDto를 사용하게 하였다.
 ```bash
 $) curl -X POST http://localhost:3000/users -d '{"userId": "jays2", "password":"5678"}' -H "Content-Type: application/json"
 ```
+
+
+### PostService에 userRepository 추가 
+글을 쓸때 사용자 정보를 같이 저장하기 위해 userRepository를 추가한다.  
+이를 위해 post.module에 user entity 정보를 imports로 추가하고 postService에서는 userRepository를 생성자에서 주입하도록 한다.  
+
